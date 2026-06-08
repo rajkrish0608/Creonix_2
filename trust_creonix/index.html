@@ -1,0 +1,570 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="google-site-verification" content="9hCav6Z60hepVU2O3N7dyDnzmDNjBzjXhr4gBrhodp8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Creonix — Classrooms of Tomorrow</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Oswald:wght@500;600&family=Playfair+Display:ital@0;1&family=Inter:wght@300;400;500;600&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --bg-base: #0B1120;
+            --bg-card: #151e32;
+            --bg-card-hover: #1e293b;
+            --text-main: #ffffff;
+            --text-muted: #94a3b8;
+            --accent-blue: #6366f1;
+            --accent-blue-hover: #818cf8;
+            --border-color: rgba(148, 163, 184, 0.15);
+        }
+
+        * { box-sizing: border-box; margin: 0; padding: 0; }
+        html { scroll-behavior: smooth; }
+
+        body {
+            font-family: 'Inter', sans-serif;
+            background-color: var(--bg-base); color: var(--text-main);
+            line-height: 1.6; overflow-x: hidden;
+            background-image: radial-gradient(circle at 15% 50%, rgba(99, 102, 241, 0.05) 0%, transparent 50%),
+                              radial-gradient(circle at 85% 30%, rgba(99, 102, 241, 0.08) 0%, transparent 50%);
+        }
+
+        /* Navigation */
+        nav {
+            display: flex; justify-content: space-between; align-items: center;
+            padding: 1.5rem 4rem; position: sticky; top: 0; z-index: 100;
+            background: rgba(11, 17, 32, 0.8); backdrop-filter: blur(20px);
+            border-bottom: 1px solid var(--border-color);
+        }
+        .logo { font-weight: 600; font-size: 1.2rem; letter-spacing: 1px; color: var(--text-main); display: flex; align-items: center; gap: 10px; }
+        .logo svg { width: 24px; height: 24px; fill: none; stroke: var(--text-main); stroke-width: 2; }
+        .nav-pill {
+            display: flex; background: rgba(255, 255, 255, 0.03);
+            border: 1px solid var(--border-color); border-radius: 50px; padding: 0.25rem;
+        }
+        .nav-pill a {
+            color: var(--text-muted); text-decoration: none; font-size: 0.9rem;
+            padding: 0.5rem 1.2rem; border-radius: 50px; transition: all 0.3s ease;
+        }
+        .nav-pill a:hover, .nav-pill a.active { color: var(--text-main); background: rgba(255, 255, 255, 0.1); }
+        .nav-actions { display: flex; align-items: center; gap: 1rem; }
+        .btn-text { color: var(--text-main); text-decoration: none; font-size: 0.9rem; padding: 0.5rem 1rem; border: 1px solid var(--border-color); border-radius: 50px; transition: background 0.3s; }
+        .btn-text:hover { background: rgba(255, 255, 255, 0.05); }
+        .btn-primary {
+            background: var(--accent-blue); color: white; text-decoration: none;
+            font-size: 0.9rem; padding: 0.6rem 1.5rem; border-radius: 50px; font-weight: 500;
+            transition: all 0.3s ease; border: none; cursor: pointer; display: inline-flex; align-items: center; gap: 0.5rem;
+        }
+        .btn-primary:hover { background: var(--accent-blue-hover); box-shadow: 0 0 20px rgba(99, 102, 241, 0.4); transform: translateY(-2px); }
+
+        /* Typography & Structure */
+        section { padding: 5rem 4rem; max-width: 1400px; margin: 0 auto; }
+        .section-header { text-align: center; margin-bottom: 4rem; }
+        .section-header h2 { font-family: 'Oswald', sans-serif; font-size: 2.5rem; text-transform: uppercase; letter-spacing: 1px; color: #fff; margin-bottom: 1rem; }
+        .section-header p { color: var(--text-muted); max-width: 600px; margin: 0 auto; }
+
+        /* Hero */
+        .hero { text-align: center; padding: 6rem 2rem 5rem; }
+        .hero-tag {
+            display: inline-block; padding: 0.5rem 1.5rem; background: rgba(99, 102, 241, 0.1);
+            color: var(--accent-blue-hover); border-radius: 50px; font-size: 0.9rem; margin-bottom: 2rem; border: 1px solid rgba(99, 102, 241, 0.2);
+        }
+        .hero h1 { font-family: 'Oswald', sans-serif; font-size: clamp(3rem, 7vw, 7rem); line-height: 1; text-transform: uppercase; margin-bottom: 1.5rem; color: #fff; }
+        .hero h2 { font-family: 'Playfair Display', serif; font-size: clamp(1.5rem, 3vw, 2.5rem); font-weight: 400; color: #e2e8f0; margin-bottom: 1.5rem; }
+        .hero p { color: var(--text-muted); max-width: 600px; margin: 0 auto 3rem; font-size: 1.1rem; }
+        
+        /* Grids & Cards */
+        .grid-container { display: grid; grid-template-columns: repeat(12, 1fr); gap: 1.5rem; }
+        .grid-3 { display: grid; grid-template-columns: repeat(3, 1fr); gap: 1.5rem; }
+        .grid-4 { display: grid; grid-template-columns: repeat(4, 1fr); gap: 1.5rem; }
+        
+        .card {
+            background: var(--bg-card); border: 1px solid var(--border-color); border-radius: 24px;
+            padding: 2.5rem; position: relative; overflow: hidden; transition: all 0.3s;
+        }
+        .card:hover { transform: translateY(-4px); background: var(--bg-card-hover); border-color: rgba(99, 102, 241, 0.3); box-shadow: 0 10px 40px rgba(0,0,0,0.2); }
+        .card h3 { font-size: 1.5rem; font-family: 'Playfair Display', serif; margin-bottom: 1rem; color: #fff; }
+        .card h4 { font-size: 1.2rem; color: #fff; margin-bottom: 0.5rem; font-weight: 500; }
+        .card p { color: var(--text-muted); font-size: 0.95rem; }
+
+        .card-large-left { grid-column: span 5; background: linear-gradient(145deg, #1e293b, #0f172a); min-height: 350px; display: flex; flex-direction: column; justify-content: flex-end; }
+        .card-large-right { grid-column: span 7; background: #1e293b; display: flex; align-items: center; gap: 2rem; overflow: visible; }
+        .node-graphic { width: 250px; height: 250px; background: rgba(99, 102, 241, 0.1); border-radius: 50%; border: 1px dashed rgba(99, 102, 241, 0.4); position: relative; flex-shrink: 0; margin-right: -2rem; }
+        .node-graphic::before, .node-graphic::after { content: ''; position: absolute; background: var(--accent-blue); border-radius: 50%; box-shadow: 0 0 20px var(--accent-blue); }
+        .node-graphic::before { width: 20px; height: 20px; top: 20%; left: 10%; animation: pulse 2s infinite; }
+        .node-graphic::after { width: 15px; height: 15px; bottom: 30%; right: 10%; animation: pulse 2s infinite 1s; }
+        @keyframes pulse { 0% { transform: scale(1); opacity: 1; } 50% { transform: scale(1.5); opacity: 0.5; } 100% { transform: scale(1); opacity: 1; } }
+        .card-bottom-text { grid-column: span 3; display: flex; align-items: center; justify-content: center; }
+        .card-bottom-text h3 { font-size: 1.2rem; color: var(--text-muted); font-family: 'Inter', sans-serif; font-weight: 400; line-height: 1.5; text-align: left; margin: 0; }
+        .card-highlight { grid-column: span 3; }
+        .btn-small { background: #fff; color: #000; border: none; padding: 0.5rem 1rem; border-radius: 50px; font-weight: 500; font-size: 0.85rem; cursor: pointer; transition: 0.3s; }
+        .btn-small:hover { background: #e2e8f0; transform: translateX(5px); }
+        .top-cards-grid { padding: 4rem 2rem; max-width: 1400px; margin: 0 auto; }
+
+        .card-large-left { grid-column: span 5; background: linear-gradient(145deg, #1e293b, #0f172a); min-height: 350px; display: flex; flex-direction: column; justify-content: flex-end; }
+        .card-large-right { grid-column: span 7; background: #1e293b; display: flex; align-items: center; gap: 2rem; overflow: visible; }
+        .node-graphic {
+            width: 250px; height: 250px; background: rgba(99, 102, 241, 0.1); border-radius: 50%;
+            border: 1px dashed rgba(99, 102, 241, 0.4); position: relative; flex-shrink: 0; margin-right: -2rem;
+        }
+        .node-graphic::before, .node-graphic::after {
+            content: ''; position: absolute; background: var(--accent-blue); border-radius: 50%;
+            box-shadow: 0 0 20px var(--accent-blue);
+        }
+        .node-graphic::before { width: 20px; height: 20px; top: 20%; left: 10%; animation: pulse 2s infinite; }
+        .node-graphic::after { width: 15px; height: 15px; bottom: 30%; right: 10%; animation: pulse 2s infinite 1s; }
+        @keyframes pulse { 0% { transform: scale(1); opacity: 1; } 50% { transform: scale(1.5); opacity: 0.5; } 100% { transform: scale(1); opacity: 1; } }
+        .card-bottom-text { grid-column: span 3; display: flex; align-items: center; justify-content: center; }
+        .card-bottom-text h3 { font-size: 1.2rem; color: var(--text-muted); font-family: 'Inter', sans-serif; font-weight: 400; line-height: 1.5; text-align: left; margin: 0; }
+        .card-highlight { grid-column: span 3; }
+        .btn-small { background: #fff; color: #000; border: none; padding: 0.5rem 1rem; border-radius: 50px; font-weight: 500; font-size: 0.85rem; cursor: pointer; transition: 0.3s; }
+        .btn-small:hover { background: #e2e8f0; transform: translateX(5px); }
+        .top-cards-grid { padding: 4rem 2rem; max-width: 1400px; margin: 0 auto; }
+
+
+        .icon-box {
+            width: 50px; height: 50px; background: rgba(255, 255, 255, 0.05); border-radius: 12px;
+            display: flex; align-items: center; justify-content: center; margin-bottom: 1.5rem;
+            border: 1px solid rgba(255,255,255,0.1); font-size: 24px;
+        }
+        
+        .btn-outline {
+            display: inline-block; margin-top: 1.5rem; border: 1px solid var(--border-color);
+            background: transparent; color: var(--text-main); padding: 0.5rem 1.2rem;
+            border-radius: 50px; font-size: 0.85rem; cursor: pointer; transition: all 0.3s; text-decoration: none;
+        }
+        .btn-outline:hover { border-color: var(--accent-blue); color: var(--accent-blue); }
+
+        /* Process Steps */
+        .process-grid { display: flex; flex-direction: column; gap: 1rem; }
+        .process-item {
+            display: flex; align-items: center; gap: 2rem; background: var(--bg-card);
+            border: 1px solid var(--border-color); border-radius: 20px; padding: 2rem;
+        }
+        .process-item .step-num { font-family: 'Oswald', sans-serif; font-size: 3rem; color: var(--border-color); font-weight: 600; line-height: 1; }
+        .process-item .content { flex: 1; }
+
+        /* Impact */
+        .stats-wrapper { display: grid; grid-template-columns: repeat(4, 1fr); gap: 1rem; margin-bottom: 3rem; }
+        .stat-box { background: rgba(99,102,241,0.05); border: 1px solid rgba(99,102,241,0.2); border-radius: 20px; padding: 2rem; text-align: center; }
+        .stat-box h3 { font-family: 'Oswald', sans-serif; font-size: 3.5rem; color: var(--accent-blue-hover); margin-bottom: 0; line-height: 1; }
+        .stat-box p { font-size: 0.9rem; text-transform: uppercase; letter-spacing: 1px; color: var(--text-muted); margin-top: 0.5rem; }
+
+        /* Contact Form */
+        .contact-layout { display: grid; grid-template-columns: 1fr 1fr; gap: 4rem; }
+        .contact-info { display: flex; flex-direction: column; gap: 2rem; }
+        .contact-detail h5 { color: var(--accent-blue-hover); font-size: 0.9rem; text-transform: uppercase; letter-spacing: 1px; margin-bottom: 0.25rem; }
+        .contact-detail p { font-size: 1.2rem; color: #fff; }
+        
+        .form-control {
+            width: 100%; background: rgba(0,0,0,0.2); border: 1px solid var(--border-color);
+            padding: 1rem 1.5rem; border-radius: 12px; color: #fff; font-family: 'Inter', sans-serif;
+            margin-bottom: 1rem; outline: none; transition: border-color 0.3s;
+        }
+        .form-control:focus { border-color: var(--accent-blue); }
+        textarea.form-control { height: 150px; resize: none; }
+
+        /* Footer */
+        footer { border-top: 1px solid var(--border-color); padding: 4rem 4rem 2rem; text-align: center; color: var(--text-muted); }
+        footer .logo { justify-content: center; margin-bottom: 1rem; }
+        
+        @media (max-width: 1024px) {
+            .grid-3, .grid-4, .stats-wrapper, .contact-layout { grid-template-columns: 1fr 1fr; }
+        }
+        @media (max-width: 768px) {
+            nav { padding: 1rem 2rem; flex-wrap: wrap; gap: 1rem; }
+            .nav-pill { order: 3; width: 100%; justify-content: center; }
+            section { padding: 4rem 2rem; }
+            .hero h1 { font-size: 4rem; }
+            .grid-3, .grid-4, .stats-wrapper, .contact-layout, .process-item { grid-template-columns: 1fr; flex-direction: column; text-align: center; }
+            .process-item .step-num { font-size: 4rem; }
+        }
+    </style>
+</head>
+<body>
+
+    <nav>
+        <div class="logo">
+            <svg viewBox="0 0 24 24"><path d="M21 16V8a2 2 0 0 0-1-1.73l-7-4a2 2 0 0 0-2 0l-7 4A2 2 0 0 0 3 8v8a2 2 0 0 0 1 1.73l7 4a2 2 0 0 0 2 0l7-4A2 2 0 0 0 21 16z"></path><polyline points="3.27 6.96 12 12.01 20.73 6.96"></polyline><line x1="12" y1="22.08" x2="12" y2="12"></line></svg>
+            CREONIX
+        </div>
+        
+        <div class="nav-pill">
+            <a href="#about">About</a>
+            <a href="#curriculum">Curriculum</a>
+            <a href="#kits">Kits</a>
+            <a href="#process">Process</a>
+            <a href="#impact">Impact</a>
+        </div>
+
+        <div class="nav-actions">
+            <a href="#contact" class="btn-primary">Partner With Us</a>
+        </div>
+    </nav>
+
+    <section class="hero">
+        <span class="hero-tag">India's STEM Lab Infrastructure Partner — Est. 2026</span>
+        <h1>WHERE YOUNG MINDS<br>BUILD TOMORROW</h1>
+        <p>Creonix Technologies embeds world-class Robotics, Coding, AR/VR and AI laboratories directly inside your school — and deploys certified faculty to teach your students from Class 1 to Class 12.</p>
+        <div style="display: flex; gap: 1rem; justify-content: center; margin-top: 2rem;">
+            <a href="#contact" class="btn-primary" style="padding: 1rem 2rem;">Partner With Us</a>
+            <a href="#process" class="btn-text" style="padding: 1rem 2rem;">See the Process</a>
+        </div>
+    </section>
+
+    <!-- Mockup Design Elements -->
+    <section class="grid-container top-cards-grid">
+        <!-- Top row -->
+        <div class="card card-large-left">
+            <div style="position: relative; z-index: 2;">
+                <h3>Interacting<br>Students</h3>
+                <p style="margin-bottom: 1.5rem;">One reality seamlessly combines connecting steps and components to empower learners.</p>
+                <button class="btn-small">Get started &rarr;</button>
+            </div>
+        </div>
+
+        <div class="card card-large-right">
+            <div style="flex: 1; z-index: 2;">
+                <h3>Learn visually with<br>AI Node graph</h3>
+                <p>Logic fidelity 3D elements combined, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore.</p>
+                <button class="btn-small" style="margin-top: 1rem;">Get started &rarr;</button>
+            </div>
+            <div class="node-graphic"></div>
+        </div>
+
+        <!-- Bottom row -->
+        <div class="card card-bottom-text">
+            <h3>Building present classrooms of tomorrow, sad students and technicalities.</h3>
+        </div>
+        
+        <div class="card card-highlight">
+            <div class="icon-box" style="background: rgba(59, 130, 246, 0.1); border-color: rgba(59, 130, 246, 0.3); color: #3b82f6;">◆</div>
+            <h4>Beonalol<br>Yeettelogies</h4>
+            <p>Consectetur adipiscing elit, sed do.</p>
+        </div>
+
+        <div class="card card-highlight">
+            <div class="icon-box" style="background: rgba(16, 185, 129, 0.1); border-color: rgba(16, 185, 129, 0.3); color: #10b981;">◇</div>
+            <h4>Cuv<br>innovation</h4>
+            <p>Eiusmod tempor incididunt ut labore.</p>
+        </div>
+
+        <div class="card card-highlight">
+            <div class="icon-box" style="background: rgba(139, 92, 246, 0.1); border-color: rgba(139, 92, 246, 0.3); color: #8b5cf6;">⬡</div>
+            <h4>Learning<br>Learnim</h4>
+            <p>Adipiscing elit, sed do eiusmod tempor.</p>
+        </div>
+    </section>
+
+    <!-- About Section -->
+    <section id="about">
+        <div class="section-header">
+            <h2>Built inside your school. Not beside it.</h2>
+        </div>
+        <div class="grid-3">
+            <div class="card">
+                <div class="icon-box">🔬</div>
+                <h4>R&D Backed Curriculum</h4>
+                <p>Every lab, every kit, and every lesson plan is produced by our in-house R&D team and peer-reviewed before deployment.</p>
+            </div>
+            <div class="card">
+                <div class="icon-box">🏫</div>
+                <h4>School-Embedded Faculty</h4>
+                <p>We don't send consultants. We station certified Creonix teachers permanently inside your school for the academic year.</p>
+            </div>
+            <div class="card">
+                <div class="icon-box">🛡️</div>
+                <h4>Zero-Harm by Design</h4>
+                <p>All kits are engineered from scratch for child safety — no sharp edges, no exposed wiring, no chemical hazards at any grade level.</p>
+            </div>
+        </div>
+    </section>
+
+    <!-- Curriculum -->
+    <section id="curriculum">
+        <div class="section-header">
+            <h2>Four Domains. One System.</h2>
+        </div>
+        <div class="grid-4">
+            <div class="card" style="text-align: center; padding: 2rem 1.5rem;">
+                <span style="font-size: 3rem; display: block; margin-bottom: 1rem;">⚙️</span>
+                <h4>Robotics</h4>
+                <p>Sensors, actuators, mechanics, and control systems — build real working machines from Day 1.</p>
+            </div>
+            <div class="card" style="text-align: center; padding: 2rem 1.5rem;">
+                <span style="font-size: 3rem; display: block; margin-bottom: 1rem;">💻</span>
+                <h4>Coding</h4>
+                <p>A progressive track from Scratch block programming through Python to real-world software projects.</p>
+            </div>
+            <div class="card" style="text-align: center; padding: 2rem 1.5rem;">
+                <span style="font-size: 3rem; display: block; margin-bottom: 1rem;">🕶️</span>
+                <h4>AR / VR</h4>
+                <p>Immersive 3D environments bring chemistry, anatomy, physics, and history off the static page.</p>
+            </div>
+            <div class="card" style="text-align: center; padding: 2rem 1.5rem;">
+                <span style="font-size: 3rem; display: block; margin-bottom: 1rem;">🧠</span>
+                <h4>Artificial Intelligence</h4>
+                <p>ML intuition, neural network fundamentals, and ethical data reasoning — progressively from Class 8.</p>
+            </div>
+        </div>
+    </section>
+
+    <!-- Kits -->
+    <section id="kits">
+        <div class="section-header">
+            <h2>The Kit System</h2>
+            <p>Designed for every grade level.</p>
+        </div>
+        <div class="grid-3">
+            <div class="card">
+                <div class="icon-box">⚡</div>
+                <h4>Paper Circuit Kit</h4>
+                <p>Electricity demystified through paper, copper tape, and LEDs. Zero sharp edges.</p>
+                <a href="#" class="btn-outline">Learn More</a>
+            </div>
+            <div class="card">
+                <div class="icon-box">🧸</div>
+                <h4>Play Max Kit</h4>
+                <p>Snap-fit components in a tactile system that makes robotic logic feel like play.</p>
+                <a href="#" class="btn-outline">Learn More</a>
+            </div>
+            <div class="card">
+                <div class="icon-box">🤖</div>
+                <h4>Straw Bot Kit</h4>
+                <p>Structural engineering through straw-based robotic assemblies.</p>
+                <a href="#" class="btn-outline">Learn More</a>
+            </div>
+            <div class="card">
+                <div class="icon-box">🕶️</div>
+                <h4>AR / VR Kit</h4>
+                <p>Headsets and AR cards rendering 3D models in immersive space.</p>
+                <a href="#" class="btn-outline">Learn More</a>
+            </div>
+            <div class="card">
+                <div class="icon-box" style="background: rgba(99,102,241,0.2); border-color: var(--accent-blue);">🏎️</div>
+                <h4>Robotics ACR Kit</h4>
+                <p>Unleash the speed! Students build and program racing platforms, exploring motors and high-velocity controls.</p>
+                <a href="#" class="btn-primary" style="margin-top: 1.5rem;">Learn More</a>
+            </div>
+            <div class="card">
+                <div class="icon-box">👣</div>
+                <h4>Human Following Robot</h4>
+                <p>Teach robots to shadow you. Explores ultrasonic sensors and IR arrays.</p>
+                <a href="#" class="btn-outline">Learn More</a>
+            </div>
+            <div class="card">
+                <div class="icon-box">🖨️</div>
+                <h4>3D Printers</h4>
+                <p>Brings digital ideas to physical reality. Students design 3D models and print custom brackets.</p>
+                <a href="#" class="btn-outline">Learn More</a>
+            </div>
+            <div class="card">
+                <div class="icon-box">🔌</div>
+                <h4>Arduino Kit</h4>
+                <p>The gateway to microcontrollers. Learn breadboarding, basic C/C++ syntax, and sensor inputs.</p>
+                <a href="#" class="btn-outline">Learn More</a>
+            </div>
+            <div class="card">
+                <div class="icon-box">⚙️</div>
+                <h4>Robotics Kit</h4>
+                <p>A comprehensive mechanical platform featuring high-torque motors and structural metal brackets.</p>
+                <a href="#" class="btn-outline">Learn More</a>
+            </div>
+        </div>
+    </section>
+
+    <!-- Process -->
+    <section id="process">
+        <div class="section-header">
+            <h2>How It Works</h2>
+        </div>
+        <div class="process-grid">
+            <div class="process-item">
+                <div class="step-num">01</div>
+                <div class="content">
+                    <h4>School Signs MoU</h4>
+                    <p>Official partnership agreement. Transparent terms, student-first, and school-first structure.</p>
+                </div>
+            </div>
+            <div class="process-item">
+                <div class="step-num">02</div>
+                <div class="content">
+                    <h4>Lab Setup</h4>
+                    <p>Creonix team designs, renovates, and installs modern benches, displays, and hardware inside the school.</p>
+                </div>
+            </div>
+            <div class="process-item">
+                <div class="step-num">03</div>
+                <div class="content">
+                    <h4>Kit Allocation</h4>
+                    <p>Age-appropriate kits are supplied and catalogued based on the class grade curriculum.</p>
+                </div>
+            </div>
+            <div class="process-item">
+                <div class="step-num">04</div>
+                <div class="content">
+                    <h4>Faculty Stationed</h4>
+                    <p>Certified Creonix educators begin teaching inside the school premises for the entire academic term.</p>
+                </div>
+            </div>
+            <div class="process-item">
+                <div class="step-num">05</div>
+                <div class="content">
+                    <h4>Monthly Progress Reports</h4>
+                    <p>Detailed analytics of student outcomes are sent to school administrators and parents every month.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Impact Section -->
+    <section id="impact">
+        <div class="section-header">
+            <h2>Our Impact In Numbers</h2>
+        </div>
+        <div class="stats-wrapper">
+            <div class="stat-box">
+                <h3>100+</h3>
+                <p>Schools Partnered</p>
+            </div>
+            <div class="stat-box">
+                <h3>50k</h3>
+                <p>Students Trained</p>
+            </div>
+            <div class="stat-box">
+                <h3>200+</h3>
+                <p>Faculty Deployed</p>
+            </div>
+            <div class="stat-box">
+                <h3>4</h3>
+                <p>Lab Types Installed</p>
+            </div>
+        </div>
+        
+        <div class="grid-3">
+            <div class="card">
+                <div style="color: var(--accent-blue-hover); margin-bottom: 1rem; font-size: 1.2rem;">★★★★★</div>
+                <p style="font-style: italic; margin-bottom: 1.5rem;">"Creonix has completely transformed how our students engage with science. The robotics lab is the most popular room in school."</p>
+                <div style="display: flex; align-items: center; gap: 1rem;">
+                    <span style="font-size: 2rem;">👩</span>
+                    <div>
+                        <h4 style="margin: 0; font-size: 1rem;">Mrs. Priya Sharma</h4>
+                        <p style="font-size: 0.8rem; margin: 0;">Principal, Delhi Public School</p>
+                    </div>
+                </div>
+            </div>
+            <div class="card">
+                <div style="color: var(--accent-blue-hover); margin-bottom: 1rem; font-size: 1.2rem;">★★★★★</div>
+                <p style="font-style: italic; margin-bottom: 1.5rem;">"The MoU process was seamless and the Creonix faculty are exceptional. Our Class 8 students built a line-following robot in three sessions."</p>
+                <div style="display: flex; align-items: center; gap: 1rem;">
+                    <span style="font-size: 2rem;">👨</span>
+                    <div>
+                        <h4 style="margin: 0; font-size: 1rem;">Mr. Rajesh Gupta</h4>
+                        <p style="font-size: 0.8rem; margin: 0;">Director, Sunrise Academy</p>
+                    </div>
+                </div>
+            </div>
+            <div class="card">
+                <div style="color: var(--accent-blue-hover); margin-bottom: 1rem; font-size: 1.2rem;">★★★★★</div>
+                <p style="font-style: italic; margin-bottom: 1.5rem;">"As a government school principal I was skeptical. Creonix's Paper Circuit Kits for our Class 2 students changed everything. Safe and magical."</p>
+                <div style="display: flex; align-items: center; gap: 1rem;">
+                    <span style="font-size: 2rem;">👩‍💼</span>
+                    <div>
+                        <h4 style="margin: 0; font-size: 1rem;">Mrs. Sunita Devi</h4>
+                        <p style="font-size: 0.8rem; margin: 0;">Headmistress, Govt. Senior School</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Team Section -->
+    <section id="team">
+        <div class="section-header">
+            <h2>The Curriculum Team</h2>
+        </div>
+        <div class="grid-4">
+            <div class="card" style="text-align: center;">
+                <span style="font-size: 3rem; display: block; margin-bottom: 1rem;">👩‍🔬</span>
+                <h4>Dr. Meera Iyer</h4>
+                <p style="color: var(--accent-blue-hover); font-size: 0.85rem; font-weight: 500; text-transform: uppercase; margin-bottom: 0.5rem;">Robotics & AI</p>
+                <p style="font-size: 0.85rem;">PhD in Robotics, IIT Bombay. 12 years designing K-12 STEM curriculum.</p>
+            </div>
+            <div class="card" style="text-align: center;">
+                <span style="font-size: 3rem; display: block; margin-bottom: 1rem;">👨‍💻</span>
+                <h4>Arjun Nair</h4>
+                <p style="color: var(--accent-blue-hover); font-size: 0.85rem; font-weight: 500; text-transform: uppercase; margin-bottom: 0.5rem;">Coding & Python</p>
+                <p style="font-size: 0.85rem;">Full-stack engineer turned educator. Makes computational coding logical and playful.</p>
+            </div>
+            <div class="card" style="text-align: center;">
+                <span style="font-size: 3rem; display: block; margin-bottom: 1rem;">👩‍🎨</span>
+                <h4>Sneha Patel</h4>
+                <p style="color: var(--accent-blue-hover); font-size: 0.85rem; font-weight: 500; text-transform: uppercase; margin-bottom: 0.5rem;">AR/VR Design</p>
+                <p style="font-size: 0.85rem;">Former AR developer at a top product studio. Brings spatial visualization to classrooms.</p>
+            </div>
+            <div class="card" style="text-align: center;">
+                <span style="font-size: 3rem; display: block; margin-bottom: 1rem;">👨‍🏫</span>
+                <h4>Ravi Shankar</h4>
+                <p style="color: var(--accent-blue-hover); font-size: 0.85rem; font-weight: 500; text-transform: uppercase; margin-bottom: 0.5rem;">STEM Curriculum</p>
+                <p style="font-size: 0.85rem;">15 years in K-12 education design. Architect of the Creonix curriculum framework.</p>
+            </div>
+        </div>
+    </section>
+
+    <!-- Contact -->
+    <section id="contact">
+        <div class="contact-layout">
+            <div>
+                <h2 style="font-family: 'Oswald', sans-serif; font-size: 3rem; text-transform: uppercase; margin-bottom: 1.5rem; color: #fff; line-height: 1.1;">Ready to build your school's future?</h2>
+                <p style="margin-bottom: 3rem; font-size: 1.1rem;">Fill in your details and our partnership team will reach you within 24 hours. We work with private, government, and trust-managed schools across India.</p>
+                <div class="contact-info">
+                    <div class="contact-detail">
+                        <h5>Email</h5>
+                        <p>hello@creonixtech.in</p>
+                    </div>
+                    <div class="contact-detail">
+                        <h5>Phone</h5>
+                        <p>+91 9572170235</p>
+                    </div>
+                    <div class="contact-detail">
+                        <h5>HQ</h5>
+                        <p>Jaipur, Rajasthan</p>
+                    </div>
+                </div>
+            </div>
+            <div class="card">
+                <form>
+                    <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 1rem;">
+                        <input type="text" class="form-control" placeholder="School Name" required>
+                        <input type="text" class="form-control" placeholder="Contact Person" required>
+                        <input type="text" class="form-control" placeholder="City / State" required>
+                        <input type="tel" class="form-control" placeholder="Mobile (+91)" required>
+                    </div>
+                    <input type="email" class="form-control" placeholder="Email Address" required>
+                    <select class="form-control" required style="appearance: none;">
+                        <option value="">Number of Students (Select Range)</option>
+                        <option>Less than 500</option>
+                        <option>500 – 1,000</option>
+                        <option>1,000 – 2,000</option>
+                        <option>2,000+</option>
+                    </select>
+                    <textarea class="form-control" placeholder="Tell us about your school..." required></textarea>
+                    <button type="submit" class="btn-primary" style="width: 100%; justify-content: center; padding: 1rem;">Send Inquiry &rarr;</button>
+                </form>
+            </div>
+        </div>
+    </section>
+
+    <footer>
+        <div class="logo" style="display: flex; gap: 10px; align-items: center; justify-content: center; margin-bottom: 1rem;">
+            <svg viewBox="0 0 24 24"><path d="M21 16V8a2 2 0 0 0-1-1.73l-7-4a2 2 0 0 0-2 0l-7 4A2 2 0 0 0 3 8v8a2 2 0 0 0 1 1.73l7 4a2 2 0 0 0 2 0l7-4A2 2 0 0 0 21 16z"></path><polyline points="3.27 6.96 12 12.01 20.73 6.96"></polyline><line x1="12" y1="22.08" x2="12" y2="12"></line></svg>
+            <span style="font-family: 'Oswald', sans-serif; font-size: 1.5rem; letter-spacing: 2px; color: #fff;">CREONIX</span>
+        </div>
+        <p style="margin-bottom: 0.5rem;">Where Young Minds Build Tomorrow. India's STEM lab infrastructure partner.</p>
+        <p style="font-size: 0.8rem; opacity: 0.6;">© 2026 Creonix Technologies Pvt Ltd. All rights reserved. Made for India's students. This website was created with the help of AI.</p>
+    </footer>
+
+</body>
+</html>
